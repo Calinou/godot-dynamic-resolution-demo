@@ -1,0 +1,348 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://fps_counter.gd" type="Script" id=1]
+[ext_resource path="res://trespass.obj" type="ArrayMesh" id=2]
+[ext_resource path="res://textures/rock_01_diff_2k.jpg" type="Texture" id=3]
+[ext_resource path="res://textures/rock_01_ao_2k.jpg" type="Texture" id=4]
+[ext_resource path="res://textures/rock_01_rough_2k.jpg" type="Texture" id=5]
+[ext_resource path="res://textures/rock_01_nor_2k.jpg" type="Texture" id=6]
+[ext_resource path="res://addons/dynamic_resolution_viewport/dynamic_resolution_viewport.gd" type="Script" id=7]
+[ext_resource path="res://scale_factor_label.gd" type="Script" id=8]
+[ext_resource path="res://test.GIProbeData.res" type="GIProbeData" id=9]
+[ext_resource path="res://animation_player.gd" type="Script" id=10]
+
+[sub_resource type="Environment" id=1]
+background_mode = 1
+background_color = Color( 1, 0.882353, 0.701961, 1 )
+fog_enabled = true
+fog_color = Color( 1, 0.882353, 0.701961, 1 )
+fog_depth_begin = 0.0
+fog_depth_curve = 2.0
+tonemap_mode = 2
+tonemap_white = 6.0
+ssao_enabled = true
+ssao_ao_channel_affect = 1.0
+glow_enabled = true
+glow_bicubic_upscale = true
+
+[sub_resource type="ViewportTexture" id=2]
+viewport_path = NodePath("Viewport")
+
+[sub_resource type="SpatialMaterial" id=3]
+albedo_texture = ExtResource( 3 )
+roughness_texture = ExtResource( 5 )
+normal_enabled = true
+normal_scale = 1.0
+normal_texture = ExtResource( 6 )
+ao_enabled = true
+ao_light_affect = 0.0
+ao_texture = ExtResource( 4 )
+ao_on_uv2 = false
+ao_texture_channel = 0
+uv1_scale = Vector3( 0.025, 0.025, 0.025 )
+uv1_triplanar = true
+
+[sub_resource type="Animation" id=4]
+resource_name = "move_camera"
+length = 30.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Viewport/Camera:transform")
+tracks/0/interp = 2
+tracks/0/loop_wrap = false
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 5, 10, 13, 16, 19, 22, 25, 28, 30 ),
+"transitions": PoolRealArray( -2, -2, -2, -2, -2, -2, -2, -2, -2, -2 ),
+"update": 0,
+"values": [ Transform( 0.657957, -0.132517, 0.741304, 0, 0.984395, 0.175972, -0.753056, -0.115782, 0.64769, 1.1078, -1.63648, 4.79295 ), Transform( 0.128517, -0.0793961, 0.988524, 0, 0.99679, 0.08006, -0.991708, -0.0102891, 0.128104, -5.56077, -2.53277, -4.5638 ), Transform( -0.812001, -0.10307, 0.574484, 0, 0.984284, 0.176593, -0.583657, 0.143394, -0.799239, -14.8004, -3.04738, -8.12841 ), Transform( -0.905989, -0.135012, -0.401193, 0, 0.947771, -0.31895, 0.423302, -0.288965, -0.858671, -18.9143, -3.97358, -4.05064 ), Transform( -0.676009, 0.189897, 0.712005, 0, 0.966225, -0.257699, -0.736893, -0.174207, -0.653177, -17.2269, -1.4151, 0.609126 ), Transform( -0.939334, -0.0176271, -0.342551, 0, 0.998679, -0.0513902, 0.343004, -0.0482726, -0.938093, -21.2933, -0.580386, 6.25682 ), Transform( 0.647216, 0.0754344, -0.758565, 0, 0.995092, 0.0989554, 0.762306, -0.0640456, 0.644039, -10.4291, -0.535853, 10.9313 ), Transform( 0.69778, 0.0409722, -0.715139, 0, 0.998363, 0.0571988, 0.716312, -0.0399122, 0.696638, 1.33324, -0.242724, 11.0056 ), Transform( 0.696573, -0.189083, 0.692122, 0, 0.964649, 0.263536, -0.717485, -0.183572, 0.671949, 7.34303, -1.42402, 1.53095 ), Transform( -0.0666603, -0.0992949, 0.992823, 0, 0.995036, 0.0995162, -0.997776, 0.00663378, -0.0663294, 2.7164, -2.60889, -0.356995 ) ]
+}
+
+[node name="WorldEnvironment" type="WorldEnvironment"]
+environment = SubResource( 1 )
+
+[node name="DynamicResolutionViewport" type="TextureRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = SubResource( 2 )
+expand = true
+flip_v = true
+script = ExtResource( 7 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": "Usage:
+1. Set the Texture property to point to a ViewportTexture by clicking its dropdown and choosing \"New ViewportTexture\".
+2. Select your Viewport node."
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 48.0
+margin_bottom = 48.0
+custom_constants/separation = 8
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FPSCounter" type="Label" parent="VBoxContainer"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "... FPS"
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+margin_top = 22.0
+margin_right = 40.0
+margin_bottom = 36.0
+text = "..."
+script = ExtResource( 8 )
+
+[node name="Viewport" type="Viewport" parent="."]
+size = Vector2( 1024, 576 )
+shadow_atlas_size = 4096
+
+[node name="Camera" type="Camera" parent="Viewport"]
+transform = Transform( 0.657957, -0.132517, 0.741304, 1.30963e-08, 0.984395, 0.175972, -0.753056, -0.115782, 0.64769, 1.1078, -1.63648, 4.79295 )
+fov = 74.0
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 0.05, 3.12266e-10, 1.53037e-09, 9.22975e-10, 0.05, 2.12998e-10, 1.74103e-09, 1.02059e-09, 0.05, 0, -50, 0 )
+material_override = SubResource( 3 )
+use_in_baked_light = true
+mesh = ExtResource( 2 )
+material/0 = null
+material/1 = null
+material/2 = null
+material/3 = null
+material/4 = null
+material/5 = null
+material/6 = null
+material/7 = null
+material/8 = null
+material/9 = null
+material/10 = null
+material/11 = null
+material/12 = null
+material/13 = null
+material/14 = null
+material/15 = null
+material/16 = null
+material/17 = null
+material/18 = null
+material/19 = null
+material/20 = null
+material/21 = null
+material/22 = null
+material/23 = null
+material/24 = null
+material/25 = null
+material/26 = null
+material/27 = null
+material/28 = null
+material/29 = null
+material/30 = null
+material/31 = null
+material/32 = null
+material/33 = null
+material/34 = null
+material/35 = null
+material/36 = null
+material/37 = null
+material/38 = null
+material/39 = null
+material/40 = null
+material/41 = null
+material/42 = null
+material/43 = null
+material/44 = null
+material/45 = null
+material/46 = null
+material/47 = null
+material/48 = null
+material/49 = null
+material/50 = null
+material/51 = null
+material/52 = null
+material/53 = null
+material/54 = null
+material/55 = null
+material/56 = null
+material/57 = null
+material/58 = null
+material/59 = null
+material/60 = null
+material/61 = null
+material/62 = null
+material/63 = null
+material/64 = null
+material/65 = null
+material/66 = null
+material/67 = null
+material/68 = null
+material/69 = null
+material/70 = null
+material/71 = null
+material/72 = null
+material/73 = null
+material/74 = null
+material/75 = null
+material/76 = null
+material/77 = null
+material/78 = null
+material/79 = null
+material/80 = null
+material/81 = null
+material/82 = null
+material/83 = null
+material/84 = null
+material/85 = null
+material/86 = null
+material/87 = null
+material/88 = null
+material/89 = null
+material/90 = null
+material/91 = null
+material/92 = null
+material/93 = null
+material/94 = null
+material/95 = null
+material/96 = null
+material/97 = null
+material/98 = null
+material/99 = null
+material/100 = null
+material/101 = null
+material/102 = null
+material/103 = null
+material/104 = null
+material/105 = null
+material/106 = null
+material/107 = null
+material/108 = null
+material/109 = null
+material/110 = null
+material/111 = null
+material/112 = null
+material/113 = null
+material/114 = null
+material/115 = null
+material/116 = null
+material/117 = null
+material/118 = null
+material/119 = null
+material/120 = null
+material/121 = null
+material/122 = null
+material/123 = null
+material/124 = null
+material/125 = null
+material/126 = null
+material/127 = null
+material/128 = null
+material/129 = null
+material/130 = null
+material/131 = null
+material/132 = null
+material/133 = null
+material/134 = null
+material/135 = null
+material/136 = null
+material/137 = null
+material/138 = null
+material/139 = null
+material/140 = null
+material/141 = null
+material/142 = null
+material/143 = null
+material/144 = null
+material/145 = null
+material/146 = null
+material/147 = null
+material/148 = null
+material/149 = null
+material/150 = null
+material/151 = null
+material/152 = null
+material/153 = null
+material/154 = null
+material/155 = null
+material/156 = null
+material/157 = null
+material/158 = null
+material/159 = null
+material/160 = null
+material/161 = null
+material/162 = null
+material/163 = null
+material/164 = null
+material/165 = null
+material/166 = null
+material/167 = null
+material/168 = null
+material/169 = null
+material/170 = null
+material/171 = null
+
+[node name="DirectionalLight" type="DirectionalLight" parent="."]
+transform = Transform( 0.5, 0.75, 0.433013, 2.40975e-08, -0.5, 0.866025, 0.866025, -0.433013, -0.25, -2.38419e-07, -3.57628e-07, 0 )
+shadow_enabled = true
+directional_shadow_blend_splits = true
+directional_shadow_normal_bias = 0.2
+directional_shadow_max_distance = 80.0
+
+[node name="GIProbe" type="GIProbe" parent="."]
+transform = Transform( 1, -1.24556e-08, -5.80207e-08, 1.24556e-08, 1, -1.37235e-08, 5.80207e-08, 1.37235e-08, 1, 0, 23, 4.76837e-07 )
+extents = Vector3( 52, 30, 52 )
+propagation = 1.0
+interior = true
+data = ExtResource( 9 )
+
+[node name="PurpleOmniLight" type="OmniLight" parent="."]
+transform = Transform( 1, -1.24556e-08, -5.80207e-08, 1.24556e-08, 1, -1.37235e-08, 5.80207e-08, 1.37235e-08, 1, -17.5963, -5.25068, -4.99616 )
+light_color = Color( 0.615686, 0.478431, 1, 1 )
+light_energy = 6.0
+light_specular = 0.0
+shadow_enabled = true
+shadow_bias = -0.01
+shadow_reverse_cull_face = true
+omni_attenuation = 2.0
+
+[node name="BlueOmniLight" type="OmniLight" parent="."]
+transform = Transform( 1, -1.24556e-08, -5.80207e-08, 1.24556e-08, 1, -1.37235e-08, 5.80207e-08, 1.37235e-08, 1, -23.2259, -5.25068, -0.790806 )
+light_color = Color( 0.52549, 0.690196, 1, 1 )
+light_energy = 6.0
+light_specular = 0.0
+shadow_enabled = true
+shadow_bias = -0.01
+shadow_reverse_cull_face = true
+omni_attenuation = 2.0
+
+[node name="GreenOmniLight" type="OmniLight" parent="."]
+transform = Transform( 1, -1.24556e-08, -5.80207e-08, 1.24556e-08, 1, -1.37235e-08, 5.80207e-08, 1.37235e-08, 1, 7.40961, -1.4683, 12.2034 )
+light_color = Color( 0.478431, 1, 0.607843, 1 )
+light_energy = 6.0
+light_specular = 0.0
+shadow_enabled = true
+shadow_bias = -0.01
+shadow_reverse_cull_face = true
+omni_attenuation = 2.0
+
+[node name="YellowOmniLight" type="OmniLight" parent="."]
+transform = Transform( 1, -1.24556e-08, -5.80207e-08, 1.24556e-08, 1, -1.37235e-08, 5.80207e-08, 1.37235e-08, 1, -22.9985, -1.84781, 2.39367 )
+light_color = Color( 1, 0.933333, 0.376471, 1 )
+light_energy = 5.0
+light_specular = 0.0
+shadow_enabled = true
+shadow_bias = -0.01
+shadow_reverse_cull_face = true
+omni_attenuation = 2.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "move_camera"
+anims/move_camera = SubResource( 4 )
+script = ExtResource( 10 )
