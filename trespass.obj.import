@@ -1,19 +1,21 @@
 [remap]
 
 importer="wavefront_obj"
+importer_version=1
 type="Mesh"
-path="res://.import/trespass.obj-6b78b061247872528b937fb787bb80aa.mesh"
+uid="uid://qejwjm0nbox4"
+path="res://.godot/imported/trespass.obj-6b78b061247872528b937fb787bb80aa.mesh"
 
 [deps]
 
-files=[ "res://.import/trespass.obj-6b78b061247872528b937fb787bb80aa.mesh" ]
+files=["res://.godot/imported/trespass.obj-6b78b061247872528b937fb787bb80aa.mesh"]
 
 source_file="res://trespass.obj"
-dest_files=[ "res://.import/trespass.obj-6b78b061247872528b937fb787bb80aa.mesh", "res://.import/trespass.obj-6b78b061247872528b937fb787bb80aa.mesh" ]
+dest_files=["res://.godot/imported/trespass.obj-6b78b061247872528b937fb787bb80aa.mesh", "res://.godot/imported/trespass.obj-6b78b061247872528b937fb787bb80aa.mesh"]
 
 [params]
 
 generate_tangents=true
-scale_mesh=Vector3( 1, 1, 1 )
-offset_mesh=Vector3( 0, 0, 0 )
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
 optimize_mesh=true

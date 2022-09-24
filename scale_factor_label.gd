@@ -1,6 +1,5 @@
 extends Label
 
-onready var rect: TextureRect = $"../../DynamicResolutionViewport"
 
 func _process(delta):
-	text = str(rect.scale_factor).pad_decimals(2)
+	text = "%.2f" % get_viewport().scaling_3d_scale
